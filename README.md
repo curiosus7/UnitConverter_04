@@ -1,5 +1,7 @@
 # Unit Converter (Python)
 
+![unit-converter](./unit-converter.jpg)
+
 ## Overview
 
 길이 단위 변환 CLI를 **PRD와 테스트로부터 추적 가능하게(C2C)** 재구현하는 프로젝트입니다.
