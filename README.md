@@ -290,7 +290,7 @@ lecture: ARRR 한 사이클마다 Report(8섹션) + Transcript 저장 · README 
 | 02 | RED — TD-01~04 Dual-Track · Harness | red | [Report/02.REPORT.md](Report/02.REPORT.md) | [Prompting/02.Export-Transcript.md](Prompting/02.Export-Transcript.md) |
 | 03 | GREEN — TD-01~04 · 1 RED=1 GREEN 커밋 | green | [Report/03.REPORT.md](Report/03.REPORT.md) | [Prompting/03.Export-Transcript.md](Prompting/03.Export-Transcript.md) |
 | 04 | REFACTOR — TD-05~06 · Golden Master · D-STR | refactoring | [Report/04.REPORT.md](Report/04.REPORT.md) | [Prompting/04.Export-Transcript.md](Prompting/04.Export-Transcript.md) |
-| 05 | new_features — TD-07~10 · EXT · PyQt · Approval GM | new_features | [Report/05.REPORT.md](Report/05.REPORT.md) | — |
+| 05 | new_features — TD-07~10 · EXT · PyQt · Approval GM | new_features | [Report/05.REPORT.md](Report/05.REPORT.md) | [Prompting/05.Export-Transcript.md](Prompting/05.Export-Transcript.md) |
 
 Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 REFACTOR · §6 커버리지 · §7 다음 단계 · §8 이슈
 
