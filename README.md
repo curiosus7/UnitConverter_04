@@ -35,7 +35,7 @@
 | ② R-G-I-O | Role·Goal·Input·Output | ✅ 완료 | PRD §2 |
 | spec | PRD·갭·추적·Harness·환경·Export | ✅ 완료 | Report/01 |
 | ③ Ask (RED) | Dual-Track 실패 테스트 | ✅ 완료 | Report/02 · 4 commits |
-| ④ Respond (GREEN) | 최소 구현 | ✅ 완료 | Report/03 · `unit_converter/` |
+| ④ Respond (GREEN) | 최소 구현 | ✅ 완료 | Report/03 · GREEN 4 commits |
 | ⑤ Refine (REFACTOR) | SRP 분리·Golden Master | ⏳ **다음** | `refactoring` 브랜치 |
 | ⑥ Repeat | 추가 FR RED 반복 | ⏳ 예정 | |
 | ⑦ 확장 | EXT-01~03 | ⏳ 예정 | `new_features` 브랜치 |
@@ -49,7 +49,7 @@
 | 설계 | 추적표 · To-Do | [docs/traceability.md](docs/traceability.md) · [docs/TODO.md](docs/TODO.md) |
 | 환경 | venv · pytest · requirements.txt | `requirements.txt` |
 | Harness | Cursor Rules · Skill · `/uc-*` Commands | `.cursor/rules/` · `.cursor/skills/` · `.cursor/commands/` |
-| Git | `staging` · `spec` · `red` · `green` 브랜치 | RED 4 + GREEN 4 + Export 1 commits |
+| Git | `staging` · `spec` · `red` · `green` 브랜치 | RED 4 + GREEN 4 commits |
 | 테스트 | Dual-Track RED→GREEN | `tests/test_converter.py` · `tests/test_cli.py` |
 | 구현 | `unit_converter/` P0 | input_parser · converter · registry · cli |
 | 문서 | README (진입·현황) | 본 파일 |
@@ -258,7 +258,7 @@ lecture: ARRR 한 사이클마다 Report(8섹션) + Transcript 저장 · README 
 |----|------|-------|--------|------------|
 | 01 | spec — PRD·갭·Harness·정합성 | spec | [Report/01.REPORT.md](Report/01.REPORT.md) | [Prompting/01.Export-Transcript.md](Prompting/01.Export-Transcript.md) |
 | 02 | RED — TD-01~04 Dual-Track · Harness | red | [Report/02.REPORT.md](Report/02.REPORT.md) | [Prompting/02.Export-Transcript.md](Prompting/02.Export-Transcript.md) |
-| 03 | GREEN — TD-01~04 최소 구현 · Export | green | [Report/03.REPORT.md](Report/03.REPORT.md) | [Prompting/03.Export-Transcript.md](Prompting/03.Export-Transcript.md) |
+| 03 | GREEN — TD-01~04 · 1 RED=1 GREEN 커밋 | green | [Report/03.REPORT.md](Report/03.REPORT.md) | [Prompting/03.Export-Transcript.md](Prompting/03.Export-Transcript.md) |
 
 Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 REFACTOR · §6 커버리지 · §7 다음 단계 · §8 이슈
 
