@@ -20,12 +20,12 @@
 | 항목 | 내용 |
 |------|------|
 | 최종 갱신 | 2026-06-11 |
-| 현재 브랜치 | `green` |
-| 현재 단계 | **GREEN 완료** (세션 03 Export) → 다음: **`refactoring`** |
-| 최신 Report | [Report/03.REPORT.md](Report/03.REPORT.md) |
+| 현재 브랜치 | `refactoring` |
+| 현재 단계 | **REFACTOR 완료** (TD-05~06) → 다음: **`new_features`** |
+| 최신 Report | [Report/04.REPORT.md](Report/04.REPORT.md) |
 | PRD 버전 | [v0.2](docs/PRD.md) |
-| pytest | **13 tests · 13 passed** |
-| 커버리지 | `unit_converter` **70%** (CLI subprocess 미집계) |
+| pytest | **19 tests · 19 passed** |
+| 커버리지 | `unit_converter` **68%** (CLI subprocess 미집계) |
 
 ### 7단계 · ARRR 로드맵
 
@@ -36,7 +36,7 @@
 | spec | PRD·갭·추적·Harness·환경·Export | ✅ 완료 | Report/01 |
 | ③ Ask (RED) | Dual-Track 실패 테스트 | ✅ 완료 | Report/02 · 4 commits |
 | ④ Respond (GREEN) | 최소 구현 | ✅ 완료 | Report/03 · GREEN 4 commits |
-| ⑤ Refine (REFACTOR) | SRP 분리·Golden Master | ⏳ **다음** | `refactoring` 브랜치 |
+| ⑤ Refine (REFACTOR) | SRP 분리·Golden Master | ✅ 완료 | `refactoring` 브랜치 |
 | ⑥ Repeat | 추가 FR RED 반복 | ⏳ 예정 | |
 | ⑦ 확장 | EXT-01~03 | ⏳ 예정 | `new_features` 브랜치 |
 
@@ -49,11 +49,11 @@
 | 설계 | 추적표 · To-Do | [docs/traceability.md](docs/traceability.md) · [docs/TODO.md](docs/TODO.md) |
 | 환경 | venv · pytest · requirements.txt | `requirements.txt` |
 | Harness | Cursor Rules · Skill · `/uc-*` Commands | `.cursor/rules/` · `.cursor/skills/` · `.cursor/commands/` |
-| Git | `staging` · `spec` · `red` · `green` 브랜치 | RED 4 + GREEN 4 commits |
-| 테스트 | Dual-Track RED→GREEN | `tests/test_converter.py` · `tests/test_cli.py` |
-| 구현 | `unit_converter/` P0 | input_parser · converter · registry · cli |
+| Git | `staging` · `spec` · `red` · `green` · `refactoring` | RED 4 + GREEN 4 commits |
+| 테스트 | Dual-Track + D-STR + Golden Master | `tests/test_converter.py` · `tests/test_cli.py` |
+| 구현 | `unit_converter/` P0 | input_parser · converter · registry · output_formatter · cli |
 | 문서 | README (진입·현황) | 본 파일 |
-| Export | 세션 01~03 Report·Transcript | [01](Report/01.REPORT.md) · [02](Report/02.REPORT.md) · [03](Report/03.REPORT.md) |
+| Export | 세션 01~04 Report·Transcript | [01](Report/01.REPORT.md) · [02](Report/02.REPORT.md) · [03](Report/03.REPORT.md) · [04](Report/04.REPORT.md) |
 
 ### 구현 To-Do 진행 (P0)
 
@@ -63,16 +63,16 @@
 | TD-02 | meter 기준 환산 | `green` | ✅ GREEN 완료 |
 | TD-03 | 단위 Registry (OCP) | `green` | ✅ GREEN 완료 |
 | TD-04 | CLI 경계 | `green` | ✅ GREEN 완료 |
-| TD-05 | SRP 패키지 분리 | `refactoring` | ⏳ pending |
-| TD-06 | 출력 포맷터 분리 | `refactoring` | ⏳ pending |
+| TD-05 | SRP 패키지 분리 | `refactoring` | ✅ REFACTOR 완료 |
+| TD-06 | 출력 포맷터 분리 | `refactoring` | ✅ REFACTOR 완료 |
 
 상세: [docs/TODO.md](docs/TODO.md)
 
 ### 다음 단계 (§7 미완료 & 다음 단계)
 
-1. **`refactoring` 브랜치** — TD-05~06 SRP 분리 (D-STR-*)
+1. **`new_features` 브랜치** — TD-07~09 (EXT-01~03)
 2. **팀 리뷰** — PRD → TC C2C · R-G-I-O I-02/I-05 Boundary 갭
-3. **`new_features`** — TD-07~09 (EXT-01~03)
+3. **Git commit** — REFACTOR 산출물 (`refactoring` 브랜치)
 4. **KPT 회고** — 실습 종료 시 (발표: A팀 권용환)
 
 ### 실습 Activities 진행 (6시간)
@@ -81,7 +81,7 @@
 |---|------|------|------|
 | 1 | 문제 코드·요구사항 분석 | 0.5h | ✅ 갭 분석 완료 |
 | 2 | 기본·품질 요구사항 구현 | 2h | ✅ GREEN P0 (TD-01~04) |
-| 3 | TC 구현 | 0.5h | ✅ RED 13건 · GREEN PASS |
+| 3 | TC 구현 | 0.5h | ✅ 19건 PASS (D-STR · Golden Master 포함) |
 | 4 | 추가 요구사항 구현 | 2h | ⏳ P1 (EXT) 대기 |
 | 5 | 회고 및 발표 | 1h | ⏳ KPT 예정 |
 
@@ -218,7 +218,7 @@ unit_converter/
     └─ test_cli.py         # Track A
 ```
 
-현재: `unit_converter/` 패키지 (GREEN) + 루트 `UnitConverter.py` (레거시 시드)
+현재: `unit_converter/` 패키지 (P0 REFACTOR) + 루트 `UnitConverter.py` (레거시 시드)
 
 ---
 
@@ -226,7 +226,7 @@ unit_converter/
 
 ```
 main → staging → spec → red → green → refactoring → new_features
-                                    ▲ GREEN 완료 · ⏳ refactoring 다음
+                                              ▲ REFACTOR 완료 · ⏳ new_features 다음
 ```
 
 | 브랜치 | 목적 | 상태 |
@@ -234,8 +234,8 @@ main → staging → spec → red → green → refactoring → new_features
 | `staging` | 작업 기준점 | ✅ |
 | `spec` | 문서·설계·Harness | ✅ 완료 |
 | `red` | RED 테스트 스켈레톤 | ✅ 완료 |
-| `green` | 최소 구현 | ✅ **현재·완료** |
-| `refactoring` | SRP 패키지 분리 | ⏳ **다음** |
+| `green` | 최소 구현 | ✅ 완료 |
+| `refactoring` | SRP 패키지 분리 | ✅ **현재·완료** |
 | `new_features` | EXT-01~03 | ⏳ |
 
 ---
@@ -259,6 +259,7 @@ lecture: ARRR 한 사이클마다 Report(8섹션) + Transcript 저장 · README 
 | 01 | spec — PRD·갭·Harness·정합성 | spec | [Report/01.REPORT.md](Report/01.REPORT.md) | [Prompting/01.Export-Transcript.md](Prompting/01.Export-Transcript.md) |
 | 02 | RED — TD-01~04 Dual-Track · Harness | red | [Report/02.REPORT.md](Report/02.REPORT.md) | [Prompting/02.Export-Transcript.md](Prompting/02.Export-Transcript.md) |
 | 03 | GREEN — TD-01~04 · 1 RED=1 GREEN 커밋 | green | [Report/03.REPORT.md](Report/03.REPORT.md) | [Prompting/03.Export-Transcript.md](Prompting/03.Export-Transcript.md) |
+| 04 | REFACTOR — TD-05~06 · Golden Master · D-STR | refactoring | [Report/04.REPORT.md](Report/04.REPORT.md) | [Prompting/04.Export-Transcript.md](Prompting/04.Export-Transcript.md) |
 
 Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 REFACTOR · §6 커버리지 · §7 다음 단계 · §8 이슈
 

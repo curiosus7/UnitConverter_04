@@ -1,6 +1,7 @@
 import sys
 
 from unit_converter.app.input_parser import ParseError, parse
+from unit_converter.app.output_formatter import write_conversion, write_message
 from unit_converter.domain.converter import convert_all
 from unit_converter.domain.unit_registry import UnknownUnitError
 
@@ -14,7 +15,6 @@ def main(args: list[str] | None = None) -> None:
     try:
         unit, value = parse(input_str)
         results = convert_all(unit, value)
-        for target_unit, converted in results.items():
-            print(f"{value} {unit} = {converted:.4f} {target_unit}")
+        write_conversion(unit, value, results)
     except (ParseError, UnknownUnitError) as exc:
-        print(str(exc))
+        write_message(str(exc))
