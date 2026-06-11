@@ -1,0 +1,11 @@
+{
+  "input": {
+    "unit": "meter",
+    "value": 2.5
+  },
+  "results": {
+    "meter": 2.5,
+    "feet": 8.2021,
+    "yard": 2.734
+  }
+}

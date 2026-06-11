@@ -191,6 +191,20 @@ def test_d_str_04_output_formatter_module():
     assert imports.isdisjoint(forbidden)
 
 
+def test_d_fmt_01_table_box_output():
+    """D-FMT-01 | EXT-03 | format_table_output → lecture appendix box table"""
+    from unit_converter.app.output_formatter import format_table_output
+    from tests._approval import assert_matches_golden
+
+    output = format_table_output(
+        "meter",
+        2.5,
+        {"meter": 2.5, "feet": 8.2021, "yard": 2.7340},
+    )
+    assert "┌" in output and "└" in output
+    assert_matches_golden(output, "GM-FMT-TABLE")
+
+
 # --- TD-07: config load (EXT-01) ---
 
 
@@ -235,3 +249,42 @@ def test_d_reg_03_register_cubit_and_convert():
     assert results["meter"] == pytest.approx(0.4572, abs=0.0001)
     expected_feet = round(results["meter"] * 3.28084, 4)
     assert results["feet"] == expected_feet
+
+
+def test_d_cfg_03_reject_json_array(tmp_path):
+    """D-CFG-03 | EXT-01 | JSON 배열 → ConfigError"""
+    from unit_converter.infrastructure.config_loader import ConfigError, load_units_json
+
+    path = tmp_path / "array.json"
+    path.write_text("[1, 2, 3]", encoding="utf-8")
+
+    with pytest.raises(ConfigError, match="JSON object"):
+        load_units_json(path)
+
+
+def test_d_cfg_04_reject_non_numeric_ratio(tmp_path):
+    """D-CFG-04 | EXT-01 | 비율 비숫자 → ConfigError"""
+    from unit_converter.infrastructure.config_loader import ConfigError, load_units_json
+
+    path = tmp_path / "bad-ratio.json"
+    path.write_text('{"meter": "one"}', encoding="utf-8")
+
+    with pytest.raises(ConfigError, match="map unit names to numbers"):
+        load_units_json(path)
+
+
+def test_d_reg_04_parse_register_expression_valid():
+    """D-REG-04 | EXT-02 | 1 cubit = 0.4572 meter → 파싱 성공"""
+    from unit_converter.app.register_parser import parse_register_expression
+
+    name, meters = parse_register_expression("1 cubit = 0.4572 meter")
+    assert name == "cubit"
+    assert meters == pytest.approx(0.4572)
+
+
+def test_d_reg_05_parse_register_expression_invalid():
+    """D-REG-05 | EXT-02 | 잘못된 register 문자열 → RegisterParseError"""
+    from unit_converter.app.register_parser import RegisterParseError, parse_register_expression
+
+    with pytest.raises(RegisterParseError, match="Invalid register format"):
+        parse_register_expression("cubit 0.4572")
