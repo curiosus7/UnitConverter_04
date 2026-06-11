@@ -6,6 +6,12 @@ import sys
 E_FMT = "Invalid format. Use unit:value (ex: meter:2.5)"
 E_NEG = "Negative value not allowed"
 
+GOLDEN_METER_25_STDOUT = (
+    "2.5 meter = 2.5000 meter\n"
+    "2.5 meter = 8.2021 feet\n"
+    "2.5 meter = 2.7340 yard\n"
+)
+
 
 def _run_cli(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -41,6 +47,22 @@ def test_u_in_04_reject_non_unit_value_format():
     """U-IN-04 | FR-05 | abc → E-FMT"""
     result = _run_cli("abc")
     assert E_FMT in _combined_output(result)
+
+
+# --- REFACTOR: Golden Master (behavior lock before SRP split) ---
+
+
+def test_golden_master_meter_25_stdout():
+    """Golden Master | meter:2.5 → 전체 stdout 스냅샷"""
+    result = _run_cli("meter:2.5")
+    assert result.stdout == GOLDEN_METER_25_STDOUT
+    assert result.returncode == 0
+
+
+def test_golden_master_negative_value_stdout():
+    """Golden Master | meter:-1 → E-NEG 정확 출력"""
+    result = _run_cli("meter:-1")
+    assert result.stdout == f"{E_NEG}\n"
 
 
 # --- TD-04: CLI output contract (FR-02) ---

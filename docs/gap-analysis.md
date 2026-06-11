@@ -11,14 +11,14 @@
 
 ## 1. 요약
 
-| 구분 | 건수 |
-|------|------|
-| P0 갭 (미구현·위반) | 12 |
-| P1 갭 (확장 요구) | 3 |
-| 부분 구현 | 4 |
-| 코드 스멜 (NFR) | 5 |
+| 구분 | 건수 | 비고 |
+|------|------|------|
+| P0 갭 (패키지 `unit_converter/`) | **0** | GREEN+REFACTOR 완료 (세션 04) |
+| P0 갭 (시드 `UnitConverter.py`만) | 12 | 레거시 — 수정 대상 아님 |
+| P1 갭 (확장 요구) | 3 | `new_features` |
+| 시드 코드 스멜 | 5 | 패키지에서 S-01·S-03~S-05 해소 |
 
-시드는 **데모 수준의 단일 파일 CLI**이며, PRD가 요구하는 **모듈 분리·검증·추적 가능한 테스트 구조**와 거리가 있다.
+`unit_converter/` 패키지는 P0 FR/NFR-01~02를 충족한다. 시드 파일은 갭 분석·비교용으로만 유지한다.
 
 ---
 
@@ -68,16 +68,25 @@
 
 ## 5. 아키텍처 갭
 
+### 5.1 패키지 (`unit_converter/`) — P0 (세션 04 갱신)
+
+| PRD §6.1 모듈 | 경로 | 상태 |
+|---------------|------|------|
+| `input_parser.py` | `app/input_parser.py` | ✅ TD-01 |
+| `unit_registry.py` | `domain/unit_registry.py` | ✅ TD-03 |
+| `converter.py` | `domain/converter.py` | ✅ TD-02 |
+| `output_formatter.py` | `app/output_formatter.py` | ✅ TD-06 REFACTOR |
+| `cli.py` | `cli.py` + `__main__.py` | ✅ orchestration (TD-04, TD-06) |
+| `tests/test_converter.py` | `tests/` Track B | ✅ 12 TC |
+| `tests/test_cli.py` | `tests/` Track A | ✅ 7 TC |
+| `config_loader.py` | — | ❌ P1 (TD-07) |
+| `length_unit.py` | — | ⏳ 선택 (PRD 목표만) |
+
+### 5.2 시드 (`UnitConverter.py`) — 레거시
+
 | PRD §6.1 모듈 | 시드 | 상태 |
 |---------------|------|------|
-| `input_parser.py` | `main()` L4–L14 | ❌ 없음 |
-| `unit_registry.py` | if/elif L16–24 | ❌ 없음 |
-| `converter.py` | L26–28 인라인 | ❌ 없음 |
-| `output_formatter.py` | print L30–32 | ❌ 없음 |
-| `config_loader.py` | — | ❌ 없음 |
-| `cli.py` | `main()` + input | ❌ 패키지 CLI 없음 |
-| `tests/test_converter.py` | — | ❌ 없음 |
-| `tests/test_cli.py` | — | ❌ 없음 |
+| 전 모듈 | 단일 `main()` | ❌ SRP/OCP 위반 (비교용 유지) |
 
 ---
 
@@ -97,3 +106,4 @@
 | 버전 | 날짜 | 내용 |
 |------|------|------|
 | 0.1 | 2026-06-11 | 초안 — spec 1단계 |
+| 0.2 | 2026-06-11 | REFACTOR 완료 — §1·§5 패키지 P0 갭 클로즈 |
