@@ -1,0 +1,1 @@
+Invalid format option. Use: csv, json, table
