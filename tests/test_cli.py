@@ -1,5 +1,6 @@
-"""Track A (Boundary) — CLI input/output tests (TD-01, TD-04)."""
+"""Track A (Boundary) — CLI input/output tests (TD-01, TD-04, TD-09)."""
 
+import json
 import subprocess
 import sys
 
@@ -78,3 +79,32 @@ def test_u_out_01_meter_conversion_multi_line_output():
     assert "8.2021" in output
     assert "2.7340" in output
     assert "2.5000" in output
+
+
+# --- TD-09: output format (EXT-03) ---
+
+
+def test_u_fmt_01_json_output():
+    """U-FMT-01 | EXT-03 | --format json → 유효 JSON"""
+    result = _run_cli("meter:2.5", "--format", "json")
+    assert result.returncode == 0
+    data = json.loads(result.stdout)
+    assert data["input"]["unit"] == "meter"
+    assert data["input"]["value"] == 2.5
+    assert data["results"]["feet"] == 8.2021
+
+
+def test_u_fmt_02_csv_output():
+    """U-FMT-02 | EXT-03 | --format csv → CSV 헤더·행"""
+    result = _run_cli("meter:2.5", "--format", "csv")
+    assert result.returncode == 0
+    lines = result.stdout.strip().splitlines()
+    assert lines[0] == "unit,value"
+    assert any("feet,8.2021" in line for line in lines)
+
+
+def test_u_fmt_03_table_output():
+    """U-FMT-03 | EXT-03 | --format table → 줄 단위 출력"""
+    result = _run_cli("meter:2.5", "--format", "table")
+    assert result.returncode == 0
+    assert result.stdout == GOLDEN_METER_25_STDOUT

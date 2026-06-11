@@ -20,12 +20,12 @@
 | 항목 | 내용 |
 |------|------|
 | 최종 갱신 | 2026-06-11 |
-| 현재 브랜치 | `refactoring` |
-| 현재 단계 | **REFACTOR 완료** (TD-05~06) → 다음: **`new_features`** |
+| 현재 브랜치 | `new_features` |
+| 현재 단계 | **P1 GREEN 완료** (TD-07~10 · PyQt GUI) |
 | 최신 Report | [Report/04.REPORT.md](Report/04.REPORT.md) |
 | PRD 버전 | [v0.2](docs/PRD.md) |
-| pytest | **19 tests · 19 passed** |
-| 커버리지 | `unit_converter` **68%** (CLI subprocess 미집계) |
+| pytest | **29 tests · 29 passed** |
+| 커버리지 | `unit_converter` (CLI subprocess · GUI 일부 미집계) |
 
 ### 7단계 · ARRR 로드맵
 
@@ -37,8 +37,8 @@
 | ③ Ask (RED) | Dual-Track 실패 테스트 | ✅ 완료 | Report/02 · 4 commits |
 | ④ Respond (GREEN) | 최소 구현 | ✅ 완료 | Report/03 · GREEN 4 commits |
 | ⑤ Refine (REFACTOR) | SRP 분리·Golden Master | ✅ 완료 | `refactoring` 브랜치 |
-| ⑥ Repeat | 추가 FR RED 반복 | ⏳ 예정 | |
-| ⑦ 확장 | EXT-01~03 | ⏳ 예정 | `new_features` 브랜치 |
+| ⑥ Repeat | 추가 FR RED 반복 | ✅ 완료 | PyQt Boundary (TD-10) |
+| ⑦ 확장 | EXT-01~04 | ✅ 완료 | `new_features` 브랜치 |
 
 ### 완료된 산출물 (§2 완료 To-Do 요약)
 
@@ -49,9 +49,9 @@
 | 설계 | 추적표 · To-Do | [docs/traceability.md](docs/traceability.md) · [docs/TODO.md](docs/TODO.md) |
 | 환경 | venv · pytest · requirements.txt | `requirements.txt` |
 | Harness | Cursor Rules · Skill · `/uc-*` Commands | `.cursor/rules/` · `.cursor/skills/` · `.cursor/commands/` |
-| Git | `staging` · `spec` · `red` · `green` · `refactoring` | RED 4 + GREEN 4 commits |
-| 테스트 | Dual-Track + D-STR + Golden Master | `tests/test_converter.py` · `tests/test_cli.py` |
-| 구현 | `unit_converter/` P0 | input_parser · converter · registry · output_formatter · cli |
+| Git | `staging` · `spec` · `red` · `green` · `refactoring` · `new_features` | RED 4 + GREEN 4 + P1 |
+| 테스트 | Dual-Track + D-STR + Golden Master + P1 + GUI | `tests/test_*.py` (29 TC) |
+| 구현 | `unit_converter/` P0 + P1 | parser · converter · registry · formatter · config · PyQt UI |
 | 문서 | README (진입·현황) | 본 파일 |
 | Export | 세션 01~04 Report·Transcript | [01](Report/01.REPORT.md) · [02](Report/02.REPORT.md) · [03](Report/03.REPORT.md) · [04](Report/04.REPORT.md) |
 
@@ -66,14 +66,23 @@
 | TD-05 | SRP 패키지 분리 | `refactoring` | ✅ REFACTOR 완료 |
 | TD-06 | 출력 포맷터 분리 | `refactoring` | ✅ REFACTOR 완료 |
 
+### 구현 To-Do 진행 (P1)
+
+| ID | 작업 | 브랜치 | 상태 |
+|----|------|--------|------|
+| TD-07 | `units.json` 로드 | `new_features` | ✅ GREEN 완료 |
+| TD-08 | 동적 단위 등록 | `new_features` | ✅ GREEN 완료 |
+| TD-09 | `--format json\|csv\|table` | `new_features` | ✅ GREEN 완료 |
+| TD-10 | PyQt GUI | `new_features` | ✅ GREEN 완료 |
+
 상세: [docs/TODO.md](docs/TODO.md)
 
 ### 다음 단계 (§7 미완료 & 다음 단계)
 
-1. **`new_features` 브랜치** — TD-07~09 (EXT-01~03)
-2. **팀 리뷰** — PRD → TC C2C · R-G-I-O I-02/I-05 Boundary 갭
-3. **Git commit** — REFACTOR 산출물 (`refactoring` 브랜치)
-4. **KPT 회고** — 실습 종료 시 (발표: A팀 권용환)
+1. **팀 리뷰** — PRD → TC C2C · R-G-I-O I-02/I-05 Boundary 갭
+2. **세션 05 Export** — Report/05 · Transcript
+3. **KPT 회고** — 실습 종료 시 (발표: A팀 권용환)
+4. **main 병합** — 품질 게이트·팀 리뷰 후
 
 ### 실습 Activities 진행 (6시간)
 
@@ -81,8 +90,8 @@
 |---|------|------|------|
 | 1 | 문제 코드·요구사항 분석 | 0.5h | ✅ 갭 분석 완료 |
 | 2 | 기본·품질 요구사항 구현 | 2h | ✅ GREEN P0 (TD-01~04) |
-| 3 | TC 구현 | 0.5h | ✅ 19건 PASS (D-STR · Golden Master 포함) |
-| 4 | 추가 요구사항 구현 | 2h | ⏳ P1 (EXT) 대기 |
+| 3 | TC 구현 | 0.5h | ✅ 29건 PASS (P1 · GUI 포함) |
+| 4 | 추가 요구사항 구현 | 2h | ✅ P1 EXT + PyQt (TD-07~10) |
 | 5 | 회고 및 발표 | 1h | ⏳ KPT 예정 |
 
 ### 품질 게이트 (수용 기준)
@@ -90,7 +99,7 @@
 | 게이트 | 조건 | 상태 |
 |--------|------|------|
 | P0 | FR-01~05, NFR-01~02 + Domain TC | ✅ (팀 리뷰 ⏳) |
-| P1 | EXT-01~03 + Boundary TC | ⏳ |
+| P1 | EXT-01~04 + Boundary TC | ✅ |
 | 팀 리뷰 | PRD→TC→코드 C2C · AI 코드 설명 | ⏳ |
 | main 병합 | 위 게이트 통과 후 | ⏳ |
 
@@ -140,14 +149,29 @@ python UnitConverter.py
 pytest tests/ -v
 pytest tests/test_converter.py -v   # Track B (Domain)
 pytest tests/test_cli.py -v        # Track A (Boundary)
+pytest tests/test_gui.py -v         # Track A (PyQt GUI)
 pytest tests/ --cov=unit_converter --cov-report=term-missing
 ```
 
-### CLI (GREEN)
+### CLI
 
 ```bash
 python -m unit_converter "meter:2.5"
+python -m unit_converter "meter:2.5" --format json
+python -m unit_converter "meter:2.5" --units-file units.json
+python -m unit_converter "cubit:1" --register "1 cubit = 0.4572 meter"
 ```
+
+### PyQt GUI
+
+```bash
+python -m unit_converter.__main__gui__
+```
+
+- **Unit** — 입력 단위 선택
+- **Value** — 숫자 입력
+- **Format** — table / json / csv
+- **Convert** — 아래 텍스트 영역에 결과 출력
 
 ---
 
@@ -174,6 +198,7 @@ python -m unit_converter "meter:2.5"
 | EXT-01 | `units.json` / YAML 비율 로드 |
 | EXT-02 | 동적 단위 등록 (`1 cubit = 0.4572 meter`) |
 | EXT-03 | `--format json \| csv \| table` |
+| EXT-04 | PyQt GUI (단위·형식·Convert → 텍스트 결과) |
 
 ### 비즈니스 로직
 
@@ -211,14 +236,17 @@ meter:2.5
 unit_converter/
 ├─ domain/          # registry, converter (OCP)
 ├─ infrastructure/  # config_loader
-├─ app/             # input_parser, output_formatter
+├─ app/             # input_parser, output_formatter, conversion_service
+├─ ui/              # PyQt main_window (EXT-04)
 ├─ cli.py
+├─ __main__gui__.py # PyQt entry
 └─ tests/
     ├─ test_converter.py   # Track B
-    └─ test_cli.py         # Track A
+    ├─ test_cli.py         # Track A (CLI)
+    └─ test_gui.py         # Track A (GUI)
 ```
 
-현재: `unit_converter/` 패키지 (P0 REFACTOR) + 루트 `UnitConverter.py` (레거시 시드)
+현재: `unit_converter/` 패키지 (P0 + P1) + 루트 `UnitConverter.py` (레거시 시드)
 
 ---
 
@@ -226,7 +254,7 @@ unit_converter/
 
 ```
 main → staging → spec → red → green → refactoring → new_features
-                                              ▲ REFACTOR 완료 · ⏳ new_features 다음
+                                                              ▲ P1·PyQt 완료
 ```
 
 | 브랜치 | 목적 | 상태 |
@@ -235,8 +263,8 @@ main → staging → spec → red → green → refactoring → new_features
 | `spec` | 문서·설계·Harness | ✅ 완료 |
 | `red` | RED 테스트 스켈레톤 | ✅ 완료 |
 | `green` | 최소 구현 | ✅ 완료 |
-| `refactoring` | SRP 패키지 분리 | ✅ **현재·완료** |
-| `new_features` | EXT-01~03 | ⏳ |
+| `refactoring` | SRP 패키지 분리 | ✅ 완료 |
+| `new_features` | EXT-01~04 · PyQt | ✅ **현재·완료** |
 
 ---
 
@@ -271,6 +299,6 @@ Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 RE
 
 1. **문제 코드 및 기본 요구사항 분석** (0.5h) — ✅ 시드 구조, PRD 갭
 2. **기본·품질 요구사항 구현** (2h) — ✅ GREEN P0 (parser·converter·registry·CLI)
-3. **TC 구현** (0.5h) — ✅ Dual-Track 13건 PASS
-4. **추가 요구사항 구현** (2h) — ⏳ EXT-01~03 + TC
+3. **TC 구현** (0.5h) — ✅ Dual-Track 29건 PASS
+4. **추가 요구사항 구현** (2h) — ✅ EXT-01~04 + PyQt GUI
 5. **회고 및 발표** (1h) — ⏳ KPT, AI 활용 회고

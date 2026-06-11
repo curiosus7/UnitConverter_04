@@ -51,6 +51,10 @@
 | EXT-03 | TD-09 | **U-FMT-01** | A | --format json | 유효 JSON |
 | EXT-03 | TD-09 | **U-FMT-02** | A | --format csv | CSV 헤더·행 |
 | EXT-03 | TD-09 | **U-FMT-03** | A | --format table | 줄/표 출력 |
+| EXT-04 | TD-10 | **U-GUI-01** | A | unit=meter, value=2.5, table | 3줄 이상, 4자리 |
+| EXT-04 | TD-10 | **U-GUI-02** | A | format=json | 유효 JSON |
+| EXT-04 | TD-10 | **U-GUI-03** | A | value=-1 | E-NEG |
+| EXT-04 | TD-10 | **U-GUI-04** | A | value=abc | E-NUM |
 
 ---
 
@@ -71,3 +75,4 @@
 |------|------|------|
 | 0.1 | 2026-06-11 | spec 3단계 — 1:1 매핑 정리 |
 | 0.2 | 2026-06-11 | REFACTOR — D-STR-01~04·Golden Master TC 추가 (세션 04) |
+| 0.3 | 2026-06-11 | new_features — EXT-04 U-GUI-01~04·D-CFG·D-REG-03·U-FMT (세션 05) |

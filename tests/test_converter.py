@@ -189,3 +189,49 @@ def test_d_str_04_output_formatter_module():
         "unit_converter.cli",
     }
     assert imports.isdisjoint(forbidden)
+
+
+# --- TD-07: config load (EXT-01) ---
+
+
+def test_d_cfg_01_reject_broken_json(tmp_path):
+    """D-CFG-01 | EXT-01 | 깨진 JSON → ConfigError"""
+    from unit_converter.infrastructure.config_loader import ConfigError, load_units_json
+
+    broken = tmp_path / "broken.json"
+    broken.write_text("{not valid json", encoding="utf-8")
+
+    with pytest.raises(ConfigError):
+        load_units_json(broken)
+
+
+def test_d_cfg_02_load_valid_units_json(tmp_path):
+    """D-CFG-02 | EXT-01 | valid units.json → 3단위 로드"""
+    from unit_converter.infrastructure.config_loader import load_units_json
+
+    units_file = tmp_path / "units.json"
+    units_file.write_text(
+        '{"meter": 1.0, "feet": 3.28084, "yard": 1.09361}',
+        encoding="utf-8",
+    )
+
+    units = load_units_json(units_file)
+    assert units == {"meter": 1.0, "feet": 3.28084, "yard": 1.09361}
+
+
+# --- TD-08: dynamic registration (EXT-02) ---
+
+
+def test_d_reg_03_register_cubit_and_convert():
+    """D-REG-03 | EXT-02 | cubit=0.4572 m 등록 → cubit:1 변환 가능"""
+    from unit_converter.domain.converter import convert_all
+    from unit_converter.domain.unit_registry import UnitRegistry
+
+    registry = UnitRegistry.default()
+    registry.register_meters_per_unit("cubit", 0.4572)
+
+    results = convert_all("cubit", 1.0, registry=registry)
+    assert results["cubit"] == 1.0
+    assert results["meter"] == pytest.approx(0.4572, abs=0.0001)
+    expected_feet = round(results["meter"] * 3.28084, 4)
+    assert results["feet"] == expected_feet

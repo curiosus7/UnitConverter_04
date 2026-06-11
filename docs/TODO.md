@@ -28,9 +28,10 @@
 
 | To-Do ID | 작업 | 모듈/브랜치 | PRD | Test ID | 상태 |
 |----------|------|-------------|-----|---------|------|
-| **TD-07** | `units.json` 로드 | `infrastructure/config_loader.py` | EXT-01 | D-CFG-01, D-CFG-02 | pending |
-| **TD-08** | 동적 단위 등록 CLI | registry 확장 | EXT-02 | D-REG-03 | pending |
-| **TD-09** | `--format json\|csv\|table` | `output_formatter.py` · CLI | EXT-03 | U-FMT-01~03 | pending |
+| **TD-07** | `units.json` 로드 | `infrastructure/config_loader.py` | EXT-01 | D-CFG-01, D-CFG-02 | **GREEN 완료** |
+| **TD-08** | 동적 단위 등록 CLI | registry · register_parser | EXT-02 | D-REG-03 | **GREEN 완료** |
+| **TD-09** | `--format json\|csv\|table` | `output_formatter.py` · CLI | EXT-03 | U-FMT-01~03 | **GREEN 완료** |
+| **TD-10** | PyQt GUI (단위·형식·Convert) | `unit_converter/ui/` · `__main__gui__.py` | EXT-04 | U-GUI-01~04 | **GREEN 완료** |
 
 ---
 
@@ -62,7 +63,7 @@
 | `red` | TD-01 ~ TD-04 테스트 스켈레톤 |
 | `green` | TD-01 ~ TD-04 최소 구현 |
 | `refactoring` | TD-05, TD-06 |
-| `new_features` | TD-07 ~ TD-09 |
+| `new_features` | TD-07 ~ TD-10 |
 
 ---
 
@@ -74,3 +75,4 @@
 | 0.2 | 2026-06-11 | RED 완료 — TD-01~04 테스트 스켈레톤 (세션 02) |
 | 0.3 | 2026-06-11 | GREEN 완료 — TD-01~04 최소 구현 (세션 03) |
 | 0.4 | 2026-06-11 | REFACTOR 완료 — TD-05~06 SRP·Golden Master (세션 04) |
+| 0.5 | 2026-06-11 | new_features GREEN — TD-07~10 EXT·PyQt GUI (세션 05) |
