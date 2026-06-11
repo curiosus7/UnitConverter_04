@@ -49,7 +49,7 @@
 | 설계 | 추적표 · To-Do | [docs/traceability.md](docs/traceability.md) · [docs/TODO.md](docs/TODO.md) |
 | 환경 | venv · pytest · requirements.txt | `requirements.txt` |
 | Harness | Cursor Rules · Skill · `/uc-*` Commands | `.cursor/rules/` · `.cursor/skills/` · `.cursor/commands/` |
-| Git | `staging` · `spec` · `red` · `green` 브랜치 | RED 4 + GREEN 2 commits |
+| Git | `staging` · `spec` · `red` · `green` 브랜치 | RED 4 + GREEN 4 + Export 1 commits |
 | 테스트 | Dual-Track RED→GREEN | `tests/test_converter.py` · `tests/test_cli.py` |
 | 구현 | `unit_converter/` P0 | input_parser · converter · registry · cli |
 | 문서 | README (진입·현황) | 본 파일 |
