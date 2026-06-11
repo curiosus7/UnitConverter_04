@@ -41,3 +41,18 @@ def test_u_in_04_reject_non_unit_value_format():
     """U-IN-04 | FR-05 | abc → E-FMT"""
     result = _run_cli("abc")
     assert E_FMT in _combined_output(result)
+
+
+# --- TD-04: CLI output contract (FR-02) ---
+
+
+def test_u_out_01_meter_conversion_multi_line_output():
+    """U-OUT-01 | FR-02 | meter:2.5 → 3줄 이상, 소수 4자리 환산"""
+    result = _run_cli("meter:2.5")
+    output = result.stdout
+
+    lines = [line for line in output.strip().splitlines() if line.strip()]
+    assert len(lines) >= 3
+    assert "8.2021" in output
+    assert "2.7340" in output
+    assert "2.5000" in output
