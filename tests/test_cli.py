@@ -1,4 +1,4 @@
-"""Track A (Boundary) — CLI input validation tests (TD-01)."""
+"""Track A (Boundary) — CLI input/output tests (TD-01, TD-04)."""
 
 import subprocess
 import sys
