@@ -1,12 +1,17 @@
+class UnknownUnitError(Exception):
+    pass
+
+
 class UnitRegistry:
     def __init__(self) -> None:
-        self._units: dict[str, float] = {
-            "meter": 1.0,
-            "feet": 3.28084,
-            "yard": 1.09361,
-        }
+        self._units: dict[str, float] = {}
+
+    def register(self, name: str, ratio_per_meter: float) -> None:
+        self._units[name] = ratio_per_meter
 
     def get_ratio(self, name: str) -> float:
+        if name not in self._units:
+            raise UnknownUnitError(f"Unknown unit: {name}")
         return self._units[name]
 
     def all_units(self) -> dict[str, float]:
@@ -14,4 +19,8 @@ class UnitRegistry:
 
     @classmethod
     def default(cls) -> "UnitRegistry":
-        return cls()
+        registry = cls()
+        registry.register("meter", 1.0)
+        registry.register("feet", 3.28084)
+        registry.register("yard", 1.09361)
+        return registry
