@@ -15,10 +15,10 @@
 
 | To-Do ID | 작업 | 모듈/브랜치 | PRD | Test ID | 상태 |
 |----------|------|-------------|-----|---------|------|
-| **TD-01** | 입력 파싱·검증 (`unit:value`) | `unit_converter/app/input_parser.py` · `red` | FR-01, FR-04, FR-05 | D-PAR-01, U-IN-01~04 | pending |
-| **TD-02** | meter 기준 환산 (전 단위) | `unit_converter/domain/converter.py` · `red` | FR-02, NFR-03 | D-CNV-01~03, U-OUT-01 | pending |
-| **TD-03** | 단위 등록·조회 (OCP) | `unit_converter/domain/unit_registry.py` · `red` | FR-03, NFR-01 | D-REG-01, D-REG-02 | pending |
-| **TD-04** | CLI 경계 (입력·출력 계약) | `unit_converter/cli.py` · `red` | FR-02~05 | U-IN-*, U-OUT-01 | pending |
+| **TD-01** | 입력 파싱·검증 (`unit:value`) | `unit_converter/app/input_parser.py` · `red` | FR-01, FR-04, FR-05 | D-PAR-01, U-IN-01~04 | **RED 완료** → GREEN 대기 |
+| **TD-02** | meter 기준 환산 (전 단위) | `unit_converter/domain/converter.py` · `red` | FR-02, NFR-03 | D-CNV-01~03 | **RED 완료** → GREEN 대기 |
+| **TD-03** | 단위 등록·조회 (OCP) | `unit_converter/domain/unit_registry.py` · `red` | FR-03, NFR-01 | D-REG-01, D-REG-02 | **RED 완료** → GREEN 대기 |
+| **TD-04** | CLI 경계 (입력·출력 계약) | `unit_converter/cli.py` · `red` | FR-02~05 | U-IN-*, U-OUT-01 | **RED 완료** → GREEN 대기 |
 | **TD-05** | SRP 패키지 분리 | `refactoring` | NFR-02 | D-STR-01~04 | pending |
 | **TD-06** | 출력 포맷터 분리 | `unit_converter/app/output_formatter.py` · `refactoring` | NFR-02 | D-STR-04 | pending |
 
@@ -71,3 +71,4 @@
 | 버전 | 날짜 | 내용 |
 |------|------|------|
 | 0.1 | 2026-06-11 | spec 4단계 — PRD v0.2 기반 |
+| 0.2 | 2026-06-11 | RED 완료 — TD-01~04 테스트 스켈레톤 (세션 02) |

@@ -1,5 +1,7 @@
 # Command: RED Test Plan — ARRR A단계 (Ask = RED ③)
 
+> **UnitConverter_04:** Magic Square 템플릿 — **`/uc-red-plan` 사용** (`.cursor/commands/README.md`).
+
 **C2C 설계표·테스트 플랜만** 작성한다. `tests/`·`src/` **파일 생성·수정 금지**.
 
 ARRR **A(Ask)** = RED ③ — 다음 `/red-skeleton`(또는 `/tdd-red`)에 넘길 **설계 산출물**만 만든다.
