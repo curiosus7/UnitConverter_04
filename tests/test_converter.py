@@ -5,7 +5,10 @@ import pytest
 E_FMT = "Invalid format. Use unit:value (ex: meter:2.5)"
 E_NUM = "Invalid number: {value_str}"
 E_NEG = "Negative value not allowed"
+E_UNIT = "Unknown unit: {unit}"
+
 YARD_PER_METER = 1.09361
+INCH_PER_METER = 39.37007874
 
 
 def test_d_par_01_parse_valid_input():
@@ -61,3 +64,27 @@ def test_d_cnv_03_feet_to_yard_via_meter():
     expected_yard = round(meter_value * YARD_PER_METER, 4)
 
     assert results["yard"] == pytest.approx(expected_yard, abs=0.0001)
+
+
+# --- TD-03: unit registry / OCP (FR-03, NFR-01) ---
+
+
+def test_d_reg_01_reject_unknown_unit():
+    """D-REG-01 | FR-03 | cubit 미등록 → E-UNIT"""
+    from unit_converter.domain.converter import convert_all
+    from unit_converter.domain.unit_registry import UnknownUnitError
+
+    with pytest.raises(UnknownUnitError, match=E_UNIT.format(unit="cubit")):
+        convert_all("cubit", 1)
+
+
+def test_d_reg_02_register_inch_without_converter_change():
+    """D-REG-02 | NFR-01 | inch 등록 후 Converter 핵심 비수정으로 환산"""
+    from unit_converter.domain.converter import convert_all
+    from unit_converter.domain.unit_registry import UnitRegistry
+
+    registry = UnitRegistry.default()
+    registry.register("inch", INCH_PER_METER)
+
+    results = convert_all("meter", 1.0, registry=registry)
+    assert results["inch"] == pytest.approx(39.3701, abs=0.0001)
