@@ -1,0 +1,59 @@
+---
+description: Unit Converter C2C TDD rules — RED/GREEN/REFACTOR, OCP/SRP, pytest
+globs:
+  - "**/*.py"
+  - "tests/**"
+  - "unit_converter/**"
+alwaysApply: true
+---
+
+# Unit Converter — Project Rules
+
+## SSOT
+
+- Requirements: `docs/PRD.md` v0.2
+- Traceability: `docs/traceability.md`
+- To-Do: `docs/TODO.md`
+- Gap: `docs/gap-analysis.md`
+
+## Architecture (SRP)
+
+Package root: `unit_converter/` (lecture SSOT)
+
+- `unit_converter/app/input_parser.py` — parse & validate only
+- `unit_converter/domain/unit_registry.py` — register & lookup units (OCP)
+- `unit_converter/domain/converter.py` — meter-based conversion only
+- `unit_converter/app/output_formatter.py` — json | csv | table output only
+- `unit_converter/infrastructure/config_loader.py` — JSON/YAML load only
+- `unit_converter/cli.py` — orchestration only
+- `tests/test_converter.py` · `tests/test_cli.py` — project root (Dual-Track)
+
+## Conversion constants (meter = 1.0)
+
+- feet: 3.28084
+- yard: 1.09361
+- Display: round to 4 decimal places
+
+## Error messages (exact strings)
+
+- E-FMT: `Invalid format. Use unit:value (ex: meter:2.5)`
+- E-NUM: `Invalid number: {value_str}`
+- E-NEG: `Negative value not allowed`
+- E-UNIT: `Unknown unit: {unit}`
+
+## TDD / ARRR
+
+- Ask = RED, Respond = GREEN, Refine = REFACTOR
+- RED: no production implementation; tests must FAIL
+- `pytest.fail("RED: [ID]")` allowed in skeleton; no skip/xfail
+- 1 RED bundle = 1 commit
+- Dual-Track: `tests/test_cli.py` (A), `tests/test_converter.py` (B)
+
+## OCP
+
+- New unit = register in registry or config; do not modify converter core logic
+
+## Python
+
+- Python 3.10+
+- pytest for all tests
