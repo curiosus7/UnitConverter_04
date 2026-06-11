@@ -1,5 +1,7 @@
 # Command: GREEN Minimal — ARRR R단계 (Respond = GREEN)
 
+> **UnitConverter_04:** Magic Square 템플릿 — **`/uc-green` 사용** (`unit_converter/` 대상).
+
 **RED 1묶음**당 `src/` **최소 구현**으로 해당 Test ID를 **PASS**시킨다.
 
 **1커밋 = 1 RED 묶음** 원칙. git commit은 **사용자 명시 요청 시만**.

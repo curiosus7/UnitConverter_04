@@ -4,6 +4,7 @@ globs:
   - "**/*.py"
   - "tests/**"
   - "unit_converter/**"
+  - "docs/**"
 alwaysApply: true
 ---
 
@@ -26,7 +27,8 @@ Package root: `unit_converter/` (lecture SSOT)
 - `unit_converter/app/output_formatter.py` — json | csv | table output only
 - `unit_converter/infrastructure/config_loader.py` — JSON/YAML load only
 - `unit_converter/cli.py` — orchestration only
-- `tests/test_converter.py` · `tests/test_cli.py` — project root (Dual-Track)
+- `unit_converter/__main__.py` — `python -m unit_converter` entry
+- `tests/test_converter.py` · `tests/test_cli.py` — **project root** (not under package; Dual-Track)
 
 ## Conversion constants (meter = 1.0)
 
@@ -41,13 +43,38 @@ Package root: `unit_converter/` (lecture SSOT)
 - E-NEG: `Negative value not allowed`
 - E-UNIT: `Unknown unit: {unit}`
 
+## Git branches
+
+`main` → `staging` → `spec` → `red` → `green` → `refactoring` → `new_features`
+
+| Branch | To-Do |
+|--------|-------|
+| `red` | TD-01~04 test skeleton |
+| `green` | TD-01~04 minimal impl |
+| `refactoring` | TD-05~06 SRP (D-STR-*) |
+| `new_features` | TD-07~09 P1 (EXT-*) |
+
 ## TDD / ARRR
 
 - Ask = RED, Respond = GREEN, Refine = REFACTOR
-- RED: no production implementation; tests must FAIL
-- `pytest.fail("RED: [ID]")` allowed in skeleton; no skip/xfail
-- 1 RED bundle = 1 commit
+- RED: no `unit_converter/` implementation; tests must FAIL
+- `pytest.fail("RED: [ID]")` allowed in skeleton; real assert + import fail also OK; no skip/xfail
+- 1 RED bundle = 1 commit; 1 GREEN bundle = 1 commit (when user requests commit)
 - Dual-Track: `tests/test_cli.py` (A), `tests/test_converter.py` (B)
+
+## Test-implied API (GREEN contract)
+
+- `input_parser.parse(s) -> (unit, value)`; `ParseError` for E-FMT/E-NUM/E-NEG
+- `converter.to_meter(unit, value) -> float`
+- `converter.convert_all(unit, value, registry=None) -> dict[str, float]` (4-decimal rounded values)
+- `unit_registry.UnitRegistry.default()`; `.register(name, ratio_per_meter)`; `UnknownUnitError` (E-UNIT)
+- CLI: `python -m unit_converter "<unit>:<value>"`; errors to stdout/stderr with exact E-* strings
+
+## Cursor Harness
+
+- Rules: this file
+- Skill: `.cursor/skills/unit-converter-tdd/SKILL.md`
+- Commands: use `/uc-*` (see `.cursor/commands/README.md`); Magic Square `/red-test-plan` etc. are **not** for this project
 
 ## OCP
 

@@ -1,5 +1,7 @@
 # Command: Export Session
 
+> **UnitConverter_04:** Magic Square 템플릿 — **`/uc-export-session` 사용** (Report 8섹션 · UnitConverter).
+
 세션 종료 시 **Report** 보고서 + **Prompting** Transcript를 한 번에 Export한다.
 
 **Export 요청 시 magic-square-docs Skill 로드 후 checklist 수행** (`.cursor/skills/magic-square-docs/`).
