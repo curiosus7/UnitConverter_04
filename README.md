@@ -7,7 +7,7 @@
 길이 단위 변환 CLI를 **PRD와 테스트로부터 추적 가능하게(C2C)** 재구현하는 프로젝트입니다.
 
 - 입력: `단위:값` (예: `meter:2.5`)
-- 출력: 지원 단위 전체로 환산 (기본 줄 단위; 확장 시 JSON / CSV / 표)
+- 출력: 지원 단위 전체로 환산 (기본 **box table**; 확장 시 JSON / CSV)
 - 개발 방식: ARRR (RED → GREEN → REFACTOR) · Dual-Track TDD
 
 > **스테이크홀더 안내:** 아래 [프로젝트 진행 현황](#프로젝트-진행-현황)에서 완료·진행·예정 항목을 한눈에 확인할 수 있습니다.  
@@ -22,9 +22,9 @@
 | 최종 갱신 | 2026-06-11 |
 | 현재 브랜치 | `new_features` |
 | 현재 단계 | **P1 GREEN 완료** (TD-07~10 · PyQt GUI) |
-| 최신 Report | [Report/04.REPORT.md](Report/04.REPORT.md) |
+| 최신 Report | [Report/05.REPORT.md](Report/05.REPORT.md) |
 | PRD 버전 | [v0.2](docs/PRD.md) |
-| pytest | **29 tests · 29 passed** |
+| pytest | **52 tests · 52 passed** |
 | 커버리지 | `unit_converter` (CLI subprocess · GUI 일부 미집계) |
 
 ### 7단계 · ARRR 로드맵
@@ -50,10 +50,10 @@
 | 환경 | venv · pytest · requirements.txt | `requirements.txt` |
 | Harness | Cursor Rules · Skill · `/uc-*` Commands | `.cursor/rules/` · `.cursor/skills/` · `.cursor/commands/` |
 | Git | `staging` · `spec` · `red` · `green` · `refactoring` · `new_features` | RED 4 + GREEN 4 + P1 |
-| 테스트 | Dual-Track + D-STR + Golden Master + P1 + GUI | `tests/test_*.py` (29 TC) |
+| 테스트 | Dual-Track + Golden Master + P1 + GUI | `tests/test_*.py` (**52 TC**) |
 | 구현 | `unit_converter/` P0 + P1 | parser · converter · registry · formatter · config · PyQt UI |
 | 문서 | README (진입·현황) | 본 파일 |
-| Export | 세션 01~04 Report·Transcript | [01](Report/01.REPORT.md) · [02](Report/02.REPORT.md) · [03](Report/03.REPORT.md) · [04](Report/04.REPORT.md) |
+| Export | 세션 01~05 Report | [01](Report/01.REPORT.md) · … · [05](Report/05.REPORT.md) |
 
 ### 구현 To-Do 진행 (P0)
 
@@ -79,10 +79,9 @@
 
 ### 다음 단계 (§7 미완료 & 다음 단계)
 
-1. **팀 리뷰** — PRD → TC C2C · R-G-I-O I-02/I-05 Boundary 갭
-2. **세션 05 Export** — Report/05 · Transcript
-3. **KPT 회고** — 실습 종료 시 (발표: A팀 권용환)
-4. **main 병합** — 품질 게이트·팀 리뷰 후
+1. **팀 리뷰** — PRD → TC C2C · Ground Rules 기록
+2. **KPT 회고** — 실습 종료 시 (발표: A팀 권용환)
+3. **main 병합** — 품질 게이트·팀 리뷰 후
 
 ### 실습 Activities 진행 (6시간)
 
@@ -90,7 +89,7 @@
 |---|------|------|------|
 | 1 | 문제 코드·요구사항 분석 | 0.5h | ✅ 갭 분석 완료 |
 | 2 | 기본·품질 요구사항 구현 | 2h | ✅ GREEN P0 (TD-01~04) |
-| 3 | TC 구현 | 0.5h | ✅ 29건 PASS (P1 · GUI 포함) |
+| 3 | TC 구현 | 0.5h | ✅ 52건 PASS (Golden Master · GUI) |
 | 4 | 추가 요구사항 구현 | 2h | ✅ P1 EXT + PyQt (TD-07~10) |
 | 5 | 회고 및 발표 | 1h | ⏳ KPT 예정 |
 
@@ -152,6 +151,9 @@ pytest tests/test_cli.py -v        # Track A (Boundary)
 pytest tests/test_gui.py -v         # Track A (PyQt GUI)
 pytest tests/ --cov=unit_converter --cov-report=term-missing
 ```
+
+Golden Master (Approval Test) 기준 파일: `tests/golden/*.approved.txt`  
+의도적 출력 변경 시에만: `UPDATE_GOLDEN=1 pytest tests/test_cli.py -v`
 
 ### CLI
 
@@ -288,6 +290,7 @@ lecture: ARRR 한 사이클마다 Report(8섹션) + Transcript 저장 · README 
 | 02 | RED — TD-01~04 Dual-Track · Harness | red | [Report/02.REPORT.md](Report/02.REPORT.md) | [Prompting/02.Export-Transcript.md](Prompting/02.Export-Transcript.md) |
 | 03 | GREEN — TD-01~04 · 1 RED=1 GREEN 커밋 | green | [Report/03.REPORT.md](Report/03.REPORT.md) | [Prompting/03.Export-Transcript.md](Prompting/03.Export-Transcript.md) |
 | 04 | REFACTOR — TD-05~06 · Golden Master · D-STR | refactoring | [Report/04.REPORT.md](Report/04.REPORT.md) | [Prompting/04.Export-Transcript.md](Prompting/04.Export-Transcript.md) |
+| 05 | new_features — TD-07~10 · EXT · PyQt · Approval GM | new_features | [Report/05.REPORT.md](Report/05.REPORT.md) | — |
 
 Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 REFACTOR · §6 커버리지 · §7 다음 단계 · §8 이슈
 
@@ -299,6 +302,6 @@ Report 8섹션: §1 개요 · §2 완료 To-Do · §3 RED · §4 GREEN · §5 RE
 
 1. **문제 코드 및 기본 요구사항 분석** (0.5h) — ✅ 시드 구조, PRD 갭
 2. **기본·품질 요구사항 구현** (2h) — ✅ GREEN P0 (parser·converter·registry·CLI)
-3. **TC 구현** (0.5h) — ✅ Dual-Track 29건 PASS
+3. **TC 구현** (0.5h) — ✅ Dual-Track 52건 PASS
 4. **추가 요구사항 구현** (2h) — ✅ EXT-01~04 + PyQt GUI
 5. **회고 및 발표** (1h) — ⏳ KPT, AI 활용 회고

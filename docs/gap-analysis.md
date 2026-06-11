@@ -15,10 +15,11 @@
 |------|------|------|
 | P0 갭 (패키지 `unit_converter/`) | **0** | GREEN+REFACTOR 완료 (세션 04) |
 | P0 갭 (시드 `UnitConverter.py`만) | 12 | 레거시 — 수정 대상 아님 |
-| P1 갭 (확장 요구) | 3 | `new_features` |
+| P1 갭 (확장 요구) | **0** | new_features 완료 (세션 05) |
+| P1 갭 (시드만) | 3 | EXT — 패키지에서 해소, 시드는 레거시 |
 | 시드 코드 스멜 | 5 | 패키지에서 S-01·S-03~S-05 해소 |
 
-`unit_converter/` 패키지는 P0 FR/NFR-01~02를 충족한다. 시드 파일은 갭 분석·비교용으로만 유지한다.
+`unit_converter/` 패키지는 P0·P1(EXT-01~04)을 충족한다. 시드 파일은 갭 분석·비교용으로만 유지한다.
 
 ---
 
@@ -37,9 +38,10 @@
 | **NFR-03** | 하드코딩 비율 | 상수 일관성은 있으나 외부 설정·테스트 고정 자릿수 없음 | P0 |
 | **NFR-04** | 테스트 없음 | PRD↔TC 추적 불가 | P0 |
 | **NFR-05** | 단일 파일 | Dual-Track `tests/` 구조 없음 | P0 |
-| **EXT-01** | 비율 하드코딩 | `units.json` / YAML 로드 없음 | P1 |
-| **EXT-02** | 고정 3단위만 | 동적 단위 등록 없음 | P1 |
-| **EXT-03** | `print`만 | `--format json\|csv\|table` 없음 | P1 |
+| **EXT-01** | 비율 하드코딩 | ~~`units.json` 로드 없음~~ | ✅ 패키지 (TD-07) |
+| **EXT-02** | 고정 3단위만 | ~~동적 단위 등록 없음~~ | ✅ 패키지 (TD-08) |
+| **EXT-03** | `print`만 | ~~`--format` 없음~~ | ✅ 패키지 (TD-09) |
+| **EXT-04** | GUI 없음 | ~~PyQt 없음~~ | ✅ 패키지 (TD-10) |
 
 ---
 
@@ -48,7 +50,7 @@
 | # | 스멜 | 위치 | PRD 연계 | 조치 방향 |
 |---|------|------|----------|-----------|
 | S-01 | Long Method / God `main()` | L1–L32 | NFR-02 | Parser·Converter·Formatter 추출 |
-| S-02 | Duplicated Magic Numbers | L19–L28 | NFR-03, EXT-01 | Registry + 설정 파일 |
+| S-02 | Duplicated Magic Numbers | L19–L28 | NFR-03, EXT-01 | ✅ Registry + `units.json` |
 | S-03 | Switch on type (if/elif unit) | L16–L24 | NFR-01 | `unit_registry` |
 | S-04 | No negative validation | L10–L14 | FR-04 | parser 검증 |
 | S-05 | Mixed abstraction (input+logic+IO) | 전체 | NFR-02, SRP | 패키지 구조 |
@@ -68,18 +70,23 @@
 
 ## 5. 아키텍처 갭
 
-### 5.1 패키지 (`unit_converter/`) — P0 (세션 04 갱신)
+### 5.1 패키지 (`unit_converter/`) — P0+P1 (세션 05 갱신)
 
 | PRD §6.1 모듈 | 경로 | 상태 |
 |---------------|------|------|
 | `input_parser.py` | `app/input_parser.py` | ✅ TD-01 |
 | `unit_registry.py` | `domain/unit_registry.py` | ✅ TD-03 |
 | `converter.py` | `domain/converter.py` | ✅ TD-02 |
-| `output_formatter.py` | `app/output_formatter.py` | ✅ TD-06 REFACTOR |
-| `cli.py` | `cli.py` + `__main__.py` | ✅ orchestration (TD-04, TD-06) |
-| `tests/test_converter.py` | `tests/` Track B | ✅ 12 TC |
-| `tests/test_cli.py` | `tests/` Track A | ✅ 7 TC |
-| `config_loader.py` | — | ❌ P1 (TD-07) |
+| `output_formatter.py` | `app/output_formatter.py` | ✅ TD-06 · TD-09 (box table/json/csv) |
+| `cli.py` | `cli.py` + `__main__.py` | ✅ orchestration (TD-04, P1 옵션) |
+| `config_loader.py` | `infrastructure/config_loader.py` | ✅ TD-07 |
+| `conversion_service.py` | `app/conversion_service.py` | ✅ CLI/GUI 공유 |
+| `register_parser.py` | `app/register_parser.py` | ✅ TD-08 |
+| `ui/main_window.py` | `ui/` + `__main__gui__.py` | ✅ TD-10 PyQt |
+| `tests/test_converter.py` | `tests/` Track B | ✅ 21+ TC |
+| `tests/test_cli.py` | `tests/` Track A | ✅ 24+ TC |
+| `tests/test_gui.py` | `tests/` Track A (GUI) | ✅ 8 TC |
+| `tests/golden/*.approved.txt` | `tests/golden/` | ✅ 11 Golden Master |
 | `length_unit.py` | — | ⏳ 선택 (PRD 목표만) |
 
 ### 5.2 시드 (`UnitConverter.py`) — 레거시
@@ -97,7 +104,7 @@
 3. **TD-03** unit_registry — FR-03, NFR-01  
 4. **TD-04** CLI boundary — U-IN-*, U-OUT-01  
 5. **TD-05~06** SRP 패키지 분리 — NFR-02 (`refactoring`)  
-6. **TD-07~09** EXT-01~03 (`new_features`)
+6. **TD-07~10** EXT-01~04 (`new_features`) — ✅ 완료
 
 ---
 
@@ -107,3 +114,4 @@
 |------|------|------|
 | 0.1 | 2026-06-11 | 초안 — spec 1단계 |
 | 0.2 | 2026-06-11 | REFACTOR 완료 — §1·§5 패키지 P0 갭 클로즈 |
+| 0.3 | 2026-06-11 | new_features 완료 — P1 갭 0 · EXT-01~04 · Golden Master 11건 |

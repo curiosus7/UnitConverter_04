@@ -28,10 +28,10 @@
 
 | To-Do ID | 작업 | 모듈/브랜치 | PRD | Test ID | 상태 |
 |----------|------|-------------|-----|---------|------|
-| **TD-07** | `units.json` 로드 | `infrastructure/config_loader.py` | EXT-01 | D-CFG-01, D-CFG-02 | **GREEN 완료** |
-| **TD-08** | 동적 단위 등록 CLI | registry · register_parser | EXT-02 | D-REG-03 | **GREEN 완료** |
-| **TD-09** | `--format json\|csv\|table` | `output_formatter.py` · CLI | EXT-03 | U-FMT-01~03 | **GREEN 완료** |
-| **TD-10** | PyQt GUI (단위·형식·Convert) | `unit_converter/ui/` · `__main__gui__.py` | EXT-04 | U-GUI-01~04 | **GREEN 완료** |
+| **TD-07** | `units.json` 로드 | `infrastructure/config_loader.py` | EXT-01 | D-CFG-01~04, U-CFG-01~05 | **GREEN 완료** |
+| **TD-08** | 동적 단위 등록 CLI | registry · register_parser | EXT-02 | D-REG-03~05, U-REG-01~04 | **GREEN 완료** |
+| **TD-09** | `--format json\|csv\|table` | `output_formatter.py` · CLI | EXT-03 | U-FMT-01~06, D-FMT-01 | **GREEN 완료** |
+| **TD-10** | PyQt GUI (단위·형식·Convert) | `unit_converter/ui/` · `__main__gui__.py` | EXT-04 | U-GUI-01~08 | **GREEN 완료** |
 
 ---
 
@@ -76,3 +76,4 @@
 | 0.3 | 2026-06-11 | GREEN 완료 — TD-01~04 최소 구현 (세션 03) |
 | 0.4 | 2026-06-11 | REFACTOR 완료 — TD-05~06 SRP·Golden Master (세션 04) |
 | 0.5 | 2026-06-11 | new_features GREEN — TD-07~10 EXT·PyQt GUI (세션 05) |
+| 0.6 | 2026-06-11 | P1 마무리 — Golden Master 11건 · box table · Boundary TC 52건 |

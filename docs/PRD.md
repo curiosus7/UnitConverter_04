@@ -122,12 +122,19 @@
 
 ### 4.3 출력 형식
 
-**기본 (table/line)** — 환산 결과는 **소수 4자리 반올림** (프로젝트 가이드 SSOT)  
+**`--format table` (lecture 부록)** — box-drawing 표, `input` 열은 입력값, `result`는 4자리 환산
+
 ```
-2.5 meter = 8.2021 feet
-2.5 meter = 2.7340 yard
-2.5 meter = 2.5000 meter
+┌────────┬─────────┬─────────┐
+│ unit   │   input │  result │
+├────────┼─────────┼─────────┤
+│ meter  │     2.5 │     2.5 │
+│ feet   │     2.5 │  8.2021 │
+│ yard   │     2.5 │  2.7340 │
+└────────┴─────────┴─────────┘
 ```
+
+**line (내부·D-STR)** — `format_conversion_output` 줄 형식 (Golden Master 이전 P0)
 
 **오류 메시지 (SSOT)** — `docs/traceability.md` 참조
 
@@ -142,7 +149,7 @@
 
 | 포맷 | 설명 |
 |------|------|
-| `table` | 줄 단위 또는 표 형태 (기본) |
+| `table` | box-drawing 표 (`unit` / `input` / `result` 열) |
 | `json` | 구조화 JSON |
 | `csv` | CSV |
 
